@@ -20,6 +20,7 @@
           rel="noopener noreferrer"
           class="button--grey"
         >
+          <n-link to="/houses">Popis kuća</n-link>
           GitHub
         </a>
       </div>
