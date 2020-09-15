@@ -1,16 +1,21 @@
 <template>
   <div>
-    <h1>POPIS KUĆA</h1>
-    <template v-for="house in houses">
-      <div :key="house.id">{{house.title}}
-      <span v-for="index in images">
-        <img class = "image" height = "200" width ="200" src="getImage()">
-      </span>
+    <h1>List of available real estate objects for rent or sale</h1>
+    <template v-for="(house, index) in houses">
+      <div :key="house.id">{{house.seo_title}}
+        <n-link :to="'/houses/' + house.id">
+          <img v-if="images[index]" alt ="Image is unavailable" class ="image" height = "200" width ="200" v-bind:src="`${$config.apiUrl}/api/media/` + images[index][0].id">
+          <span v-else>Image of this house is unavailable</span>
+          <p>{{house.seo_desc}}</p>
+          <p>The address of this real estate object is: {{house.address}}</p>
+          <p v-if="house.price">Price is: {{house.price}}€</p>
+          <p v-else>The price of this house is unavailable!</p>
+        </n-link>
       </div>
     </template>
-    <pagination>
+<!--    <pagination>-->
 
-    </pagination>
+<!--    </pagination>-->
 <!--    <ul>-->
 <!--      <li v-for="house of houses" :key="house.id">-->
 <!--        <span @click="pushToSingle(house)">{{house.title}}</span>-->
@@ -43,7 +48,7 @@ export default {
       console.log(data.data.data);
       debugger
       this.media = data.data.data.map(h => h.media)
-      this.images = this.media.map(i => i.images)
+      this.images = data.data.data.map(i => i.media.image)
     }catch(err){
       console.log(err)
     }
